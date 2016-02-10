@@ -16,6 +16,9 @@
     "bhttp": "~1.2.1",
     "bluebird": "~3.0.6",
     "express-promise-router": "~0.0.9",
-    "node-hue-api": "~2.1.1"
+    "node-hue-api": "~2.1.1",
+    "bootstrap": "~3.3.6",
+    "jquery": "~2.2.0",
+    "angular": "~1.4.9"
   }
 }

@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(ng-controller="LightsController as lights")
+    div.row
+      div.col-md-1
+        button.btn.btn-default.full(ng-click='lights.off()') OFF
+      div.col-md-1
+        button.btn.btn-default.full(ng-click='lights.on()') ON

@@ -26,7 +26,12 @@ module.exports = (function(bridgeip){
         return hue.nupnpSearch().then(function(bridge) {
             // find the hub
             console.log("Hue Bridge Found: " + JSON.stringify(bridge));
-            bridegip = bridge[0].ipaddress;
+            if(bridge.length > 0) {
+                bridegip = bridge[0].ipaddress;
+            }
+            else{
+                throw "Hue Bridge not found";
+            }
         }).then(function(){
             // create the api object
             api = new HueApi(bridegip, username);
@@ -44,6 +49,8 @@ module.exports = (function(bridgeip){
                 console.log("Successfully Logged in with Existing User");
                 ready = true;
             }
+        }).catch(function(err){
+            console.log(err);
         });
     });
 
@@ -99,8 +106,38 @@ module.exports = (function(bridgeip){
         }
     };
 
+    function setColorXY(id, x, y){
+
+    }
+
+    function setBrightness(id, brightness){
+
+    }
+
+    function setOn(id){
+        if(ready){
+            return api.setLightState(id, {"on": true});
+        }
+        else{
+            throw "API not ready";
+        }
+    }
+
+    function setOff(id){
+        if(ready){
+            return api.setLightState(id, {"on": false});
+        }
+        else{
+            throw "API not ready";
+        }
+    }
+
     return {
         username: username,
-        getLights: getLights
+        getLights: getLights,
+        setColorXY: setColorXY,
+        setBrightness: setBrightness,
+        setOn: setOn,
+        setOff: setOff
     };
 })();
