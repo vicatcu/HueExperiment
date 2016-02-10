@@ -43,4 +43,28 @@ router.post('/light/:id/off', function(req, res){
   });
 });
 
+router.post('/light/:id/xybri', function(req, res){
+  //console.log(req.params.id);
+  //console.log(req.body);
+  Promise.try(function(){
+    return huewrapper.setXYColorBrightness(req.params.id, req.body.x, req.body.y, req.body.brightness);
+  }).then(function(){
+    res.send({ok: true});
+  }).catch(function(err){
+    res.send({ok: false, err: err});
+  });
+});
+
+router.post('/light/:id/name', function(req, res){
+  //console.log(req.params.id);
+  //console.log(req.body);
+  Promise.try(function(){
+    return huewrapper.setLightName(req.params.id, req.body.name);
+  }).then(function(){
+    res.send({ok: true});
+  }).catch(function(err){
+    res.send({ok: false, err: err});
+  });
+});
+
 module.exports = router;

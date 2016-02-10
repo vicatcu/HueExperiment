@@ -23,6 +23,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 app.use(express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use(express.static(path.join(__dirname, 'node_modules/angular')));
+app.use(express.static(path.join(__dirname, 'node_modules/angular-aria')));
+app.use(express.static(path.join(__dirname, 'node_modules/angular-animate')));
+app.use(express.static(path.join(__dirname, 'node_modules/angular-material')));
 app.use('/', routes);
 
 

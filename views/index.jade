@@ -1,13 +1,49 @@
 extends layout
 
 block content
-  div(ng-controller="LightsController as lightsCtrl")
-    ul.list-group
+  div.col-md-12(ng-controller="LightsController as lightsCtrl")
+    div.row.col-md-12
+      | &nbsp;
+    ul.list-group.col-md-12
       li.list-group-item(ng-repeat="light in lightsCtrl.lights")
-        input(type="radio", value="{{light.id}}", ng-model="lightsCtrl.target_light_id", )
-        | {{light.name}}
+        input(type="radio", value="{{light.id}}", ng-model="lightsCtrl.target_light_id")
+        {{light.name}}
     div.row
       div.col-md-1
-        button.btn.btn-default.full(ng-click='lightsCtrl.off()') OFF
+        input.form-control(type="text", value="0", ng-model="lightsCtrl.x_min")
+        label.label.label-default X-min
       div.col-md-1
-        button.btn.btn-default.full(ng-click='lightsCtrl.on()') ON
+        input.form-control(type="text", value="0", ng-model="lightsCtrl.y_min")
+        label.label.label-default Y-min
+      div.col-md-1
+        input.form-control(type="text", value="0", ng-model="lightsCtrl.x_max")
+        label.label.label-default X-max
+      div.col-md-1
+        input.form-control(type="text", value="0", ng-model="lightsCtrl.y_max")
+        label.label.label-default Y-max
+    div.row.col-md-12
+      | &nbsp;
+    div.row.col-md-6
+      md-slider(min="0", max="255", ng-model="lightsCtrl.current_bri" aria-label="brightness", ng-mouseup="lightsCtrl.onBrightnessChange()")
+    h3.row Brightness
+    div.row.col-md-12
+      | &nbsp;
+    div.row.col-md-6
+      md-slider(min="0", max="100", ng-model="lightsCtrl.current_colorxy" aria-label="color", ng-mouseup="lightsCtrl.onXYColorChange()")
+    h3.row Color
+    div.row
+      | &nbsp;
+    div.row.col-md-12
+      | &nbsp;
+    div.row.col-md-6
+      input.form-control(type="text", value="0", ng-model="lightsCtrl.current_light_name")
+      label.label.label-default Light Name
+    div.row.col-md-12
+      | &nbsp;
+    div.row
+      div.col-md-2
+        button.btn.btn-default.full(ng-click='lightsCtrl.setOff()') Current Light Off
+      div.col-md-2
+        button.btn.btn-default.full(ng-click='lightsCtrl.setOn()') Current Light On
+      div.col-md-2
+        button.btn.btn-default.full(ng-click='lightsCtrl.setLightName()') Set Name

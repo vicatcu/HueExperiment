@@ -7,6 +7,7 @@ Promise.promisifyAll(fs);
 
 module.exports = (function(bridgeip){
     var api;
+    var lightState = hue.lightState;
     var bridegip;
     var username = "temporary";
     var credentials_filename = path.join(__dirname, 'huecredentials.json');
@@ -106,17 +107,32 @@ module.exports = (function(bridgeip){
         }
     };
 
+    // Sets the xy value where x and y is from 0 to 1 in the Philips Color co-ordinate system
     function setColorXY(id, x, y){
-
+        if(ready){
+            var state = lightState.create().on(true).xy(x, y);
+            return api.setLightState(id, state);
+        }
+        else{
+            throw "API not ready";
+        }
     }
 
+    // Sets the brightness, where value from 0 to 255
     function setBrightness(id, brightness){
-
+        if(ready){
+            var state = lightState.create().on(true).bri(brightness);
+            return api.setLightState(id, state);
+        }
+        else{
+            throw "API not ready";
+        }
     }
 
     function setOn(id){
         if(ready){
-            return api.setLightState(id, {"on": true});
+            var state = lightState.create().on(true);
+            return api.setLightState(id, state);
         }
         else{
             throw "API not ready";
@@ -125,7 +141,48 @@ module.exports = (function(bridgeip){
 
     function setOff(id){
         if(ready){
-            return api.setLightState(id, {"on": false});
+            var state = lightState.create().on(false);
+            return api.setLightState(id, state);
+        }
+        else{
+            throw "API not ready";
+        }
+    }
+
+    function setXYColorBrightness(id, x, y, brightness){
+        if(ready){
+            var something_set = false;
+
+            var state = lightState.create()
+            if(x && y){
+                state.xy(x,y);
+                something_set = true;
+            }
+            if(brightness){
+                state.bri(brightness);
+                something_set = true;
+            }
+
+            if(something_set){
+                return api.setLightState(id, state);
+            }
+            else{
+                throw "x, y, brightness input error";
+            }
+        }
+        else{
+            throw "API not ready";
+        }
+    }
+
+    function setLightName(id, name){
+        if(ready){
+            if(name){
+                return api.setLightName(id, name);
+            }
+            else{
+                throw "light name undefined";
+            }
         }
         else{
             throw "API not ready";
@@ -138,6 +195,8 @@ module.exports = (function(bridgeip){
         setColorXY: setColorXY,
         setBrightness: setBrightness,
         setOn: setOn,
-        setOff: setOff
+        setOff: setOff,
+        setXYColorBrightness: setXYColorBrightness,
+        setLightName: setLightName
     };
 })();
