@@ -23,12 +23,20 @@
         }
 
         // kick off a timer to get the lights every 15 seconds
-        setInterval(function(){
+        function discoverLights(){
             $http.get("/lights").success(function(data){
                 mv.lights = data;
             }).error(function(err){
                 console.log(err);
             });
+        }
+
+        setTimeout( function(){
+            discoverLights();
+        }, 3000);
+
+        setInterval(function(){
+            discoverLights();
         }, 15000);
 
     }]);

@@ -1,9 +1,13 @@
 extends layout
 
 block content
-  div(ng-controller="LightsController as lights")
+  div(ng-controller="LightsController as lightsCtrl")
+    ul.list-group
+      li.list-group-item(ng-repeat="light in lightsCtrl.lights")
+        input(type="radio", value="{{light.id}}", ng-model="lightsCtrl.target_light_id", )
+        | {{light.name}}
     div.row
       div.col-md-1
-        button.btn.btn-default.full(ng-click='lights.off()') OFF
+        button.btn.btn-default.full(ng-click='lightsCtrl.off()') OFF
       div.col-md-1
-        button.btn.btn-default.full(ng-click='lights.on()') ON
+        button.btn.btn-default.full(ng-click='lightsCtrl.on()') ON
