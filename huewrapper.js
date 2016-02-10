@@ -153,7 +153,7 @@ module.exports = (function(bridgeip){
         if(ready){
             var something_set = false;
 
-            var state = lightState.create()
+            var state = lightState.create().on();
             if(x && y){
                 state.xy(x,y);
                 something_set = true;
